@@ -14,6 +14,7 @@ namespace devil
     {
         public createComponent(componentType:number):Component
         {
+            console.log("UIReadManager.",componentType)
             let cls:any;
             switch(componentType)
             {
@@ -80,6 +81,7 @@ namespace devil
         public read(parent:Container,bytes:ByteArrayExtend,version:string,__setProperty:Function,target:any):Component
         {
             let componentType:number = bytes.readShort();
+            console.log("UIReadManger",componentType);
             let component:Component = this.createComponent(componentType);
             this.parse(component,bytes,version,__setProperty,target);
             if(__setProperty != null)__setProperty.call(target,component.name,component);
@@ -175,15 +177,6 @@ namespace devil
 
         private readImage(component:Image,bytes:ByteArrayExtend,version:string):void
         {
-            // let has9Scale:boolean = bytes.readBoolean();
-            // if(has9Scale)component.scale9Grid = new egret.Rectangle(bytes.readShort(),bytes.readShort(),bytes.readShort(),bytes.readShort());
-            // else component.scale9Grid = null;
-            // if(version <= UIVersion.VERSION9)
-            // {
-            //     let has9Scale:boolean = bytes.readBoolean();
-			// 	if(has9Scale)component.scale9Grid = new egret.Rectangle(bytes.readShort(),bytes.readShort(),bytes.readShort(),bytes.readShort());
-			// 	else component.scale9Grid = null;
-            // }
         }
 
         private readText(component:Text,bytes:ByteArrayExtend,version:string):void
@@ -212,7 +205,6 @@ namespace devil
         private readButtonIcon(component:ButtonIcon,bytes:ByteArrayExtend,version:string):void
         {
             this.readStyles(component,bytes,version);
-            // if(version > UIVersion.VERSION3)component.setIconOffset(bytes.readShort(),bytes.readShort());
             component.setIconOffset(bytes.readShort(),bytes.readShort());
         }
 
@@ -250,23 +242,7 @@ namespace devil
             let count:number = bytes.readByte();
             for(let i:number = 0 ; i < count ; i ++)
             {
-                // if(version > UIVersion.VERSION6)
-                // {
-                    component.setStyle(bytes.readUTF(),bytes.readUTF());
-                    // if(version > UIVersion.VERSION7)component.setStyle(bytes.readUTF(),bytes.readUTF());
-                    // else 
-                    // {
-                    //     component.setStyle(bytes.readUTF(),bytes.readUTF());
-                    // }
-                // }
-                // else
-                // {
-                //     component.setStyle(bytes.readUTF(),bytes.readUTF());
-                // }
-                // if(version <= UIVersion.VERSION9)
-				// {
-				// 	if(bytes.readBoolean())(bytes.readUTF(),bytes.readShort(),bytes.readShort(),bytes.readShort(),bytes.readShort());
-				// }
+                component.setStyle(bytes.readUTF(),bytes.readUTF());
             }
         }
 
@@ -295,7 +271,7 @@ namespace devil
             {
                 this.readTxtData(bytes,model);
             }
-            // if(bytes.bytesAvailable)this.readTextureData(bytes);
+            // console.log("UIReadManager.readUIData",canvasLen);
             if(bytes.bytesAvailable)Model.resConfig.parseConfig(bytes,null);
             bytes.pool();
         }
@@ -309,43 +285,5 @@ namespace devil
 			bytes.readBytes(data,0,len);
 			model.addCanvas(data,name,version);
         }
-        
-        // private readTextureData(bytes:ByteArrayExtend):void
-		// {
-		// 	// let version:string = bytes.readUTF();
-		// 	// this.readEgretTexture(bytes,version);
-        // }
-        
-        // private readEgretTexture(bytes:ByteArrayExtend,version:string):void
-		// {
-        //     Model.resConfig.parseConfig();
-		// 	let textureLen:number = bytes.readByte();
-		// 	let textureName:string;
-		// 	let skinName:string;
-		// 	let skinCount:number;
-		// 	var data:ImageData;
-		// 	var datas:HashMap = getResourceManager().getData();
-		// 	for(var j:int = 0 ; j < textureLen; j ++)
-		// 	{
-		// 		textureName = bytes.readUTF();
-		// 		skinCount = bytes.readShort();
-		// 		for(var m:Number = 0 ; m < skinCount; m ++)
-		// 		{
-		// 			skinName = bytes.readUTF();
-		// 			data = datas.get(skinName);
-		// 			if(data == null)
-		// 			{
-		// 				data = new ImageData(skinName,"",null,textureName);
-		// 				datas.add(skinName,data);
-		// 			}
-		// 			else
-		// 			{
-		// 				if(data.has9Scale)data.update(data.path,data.bitmapData,textureName,data.scale9Grid.x,data.scale9Grid.y,data.scale9Grid.width,data.scale9Grid.height);
-		// 				else data.update(data.path,data.bitmapData,textureName,0,0,0,0);
-		// 			}
-		// 			if(bytes.readBoolean())data.updateScale9(bytes.readShort(),bytes.readShort(),bytes.readShort(),bytes.readShort());
-		// 		}
-		// 	}
-        // }
     }
 }

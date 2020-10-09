@@ -209,7 +209,7 @@ namespace devil
             }
         }
 
-        public __click(callBack:Function,target:any):void
+        public __click(callBack:(e:egret.TouchEvent,target:Image|ImageRemote) => void,target:any):void
         {
             this.touchEnabled = true;
             this._clickFun = CallBackInfo.create(callBack,target);

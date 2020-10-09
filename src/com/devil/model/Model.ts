@@ -29,6 +29,7 @@ namespace devil
             this.cvo = new CVOModel();
             this.lifecyclePause = false;
             this.wxGame = new WXGameModel();
+            this.resConfig = new ResourceConfig2();
         }
     }
 }

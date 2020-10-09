@@ -35,6 +35,7 @@ namespace devil
 		private readChildren(bytes:ByteArrayExtend,version:string):void
 		{
 			let numChildren:number = bytes.readByte();
+			console.log("Canvas",numChildren);
 			for(let i:number = 0 ; i < numChildren; i ++)
 			{
 				Manager.uiRead.read(this,bytes,version,this.setProperty,this);

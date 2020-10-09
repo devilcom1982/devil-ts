@@ -3,10 +3,10 @@ namespace devil
     /**
      * 加载管理器
      * @author devil
-     * @version V20180807
+     * @version V20201008
      * @create V20180717
      * @place guangzhou
-     * @description 整理
+     * @update V20201008 guangzhou 加入Text请求Post方式
      */
     export class LoaderManager
     {
@@ -60,9 +60,9 @@ namespace devil
          * @param resourceGCType    资源回收类型，对应ResourceGCType常量，默认值为ResourceGCType.NOW
          * @param priority          加载顺序等级，越大越高,对应ResPriorityType常量,默认值为ResPriorityType.LOAD_LEVEL1
          */
-        public load(path:PathInfo,complete:Function,target:any,resourceGCType?:number,priority?:number,error?:Function,errorTarget?:any):void
+        public load(path:PathInfo,complete:Function,target:any,resourceGCType?:number,priority?:number,error?:Function,errorTarget?:any):ILoader
         {
-            if(this._loadersFail[path.key]) return;
+            if(this._loadersFail[path.key]) return null;
             // console.log("LoaderManager.load",path.key);
             if(resourceGCType == null)resourceGCType = ResourceGCType.NOW;
             if(priority == null)priority = ResPriorityType.LOAD_LEVEL1;
@@ -90,6 +90,7 @@ namespace devil
             {
                 if(complete != null)loader.add(complete,target,error,errorTarget);
             }
+            return loader;
         }
 
         /**

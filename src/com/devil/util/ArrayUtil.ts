@@ -77,6 +77,22 @@ namespace devil
             });
         }
 
+        /**
+         * 对数组随机排行
+         * @param value 
+         */
+        public static randomSort(value:any[]):void
+        {
+            value.sort(function(obj1, obj2)
+            {
+                return Math.random() < 0.5 ? 1 : -1
+            })
+        }
+
+        /**
+         * 获取数组随机值
+         * @param arr 
+         */
         public static random(arr:any[]):any
         {
             return arr[Math.floor(arr.length * Math.random())];

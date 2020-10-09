@@ -257,9 +257,16 @@ namespace devil
             httpReq.responseType = responseType;
             httpReq.addEventListener(egret.Event.COMPLETE, this.___httpReqComplete, this);
             httpReq.addEventListener(egret.IOErrorEvent.IO_ERROR, this.___httpReqErrorComplete, this);
+            // httpReq.open(this._path.urls[index]);
+            // httpReq.send();
+            this.$request(httpReq,index);
+            this._httpReqs.push(httpReq);
+        }
+
+        protected $request(httpReq:egret.HttpRequest,index:number):void
+        {
             httpReq.open(this._path.urls[index]);
             httpReq.send();
-            this._httpReqs.push(httpReq);
         }
         
         protected $loadImage(url:string):void

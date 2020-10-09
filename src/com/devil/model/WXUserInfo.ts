@@ -13,13 +13,23 @@ namespace devil
     {
         public nickName:string;
         public avatarUrl:string;
-        public sex:boolean;
+        // public sex:boolean;
+
+        public gender:number;//1男，2女，0未知
+        public province:string;
+        public city:string;
+        public country:string;
 
         public parse(data:any):void
         {
+            // console.log("userInof",data);
             this.nickName = data.nickName;
             this.avatarUrl = data.avatarUrl;
-            this.sex = data.sex == 1;
+            this.gender = data.gender;
+            this.country = data.country;
+            this.province = data.province;
+            this.city = data.city;
+
         }
     }
 }

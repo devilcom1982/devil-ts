@@ -10,6 +10,18 @@ namespace devil
     export class TextLoader extends BaseLoader
     {
         public text:string;
+        private _isPost:boolean;
+        private _params:any;
+
+        /**
+         * 使用Post加载方式
+         * @param params 
+         */
+        public post(params:any):void
+        {
+            this._isPost = true;
+            this._params = params;
+        }
 
         /**
          * 加载
@@ -27,6 +39,16 @@ namespace devil
             this.$load(egret.HttpResponseType.TEXT,0);
         }
 
+        protected $request(httpReq:egret.HttpRequest,index:number):void
+        {
+            if(!this._isPost)super.$request(httpReq,index);
+            else 
+            {
+                httpReq.open(this._path.urls[index],egret.HttpMethod.POST);
+                httpReq.send(this._params);
+            }
+        }
+
         
         protected parse(data:any):void
         {
@@ -36,6 +58,8 @@ namespace devil
         public unuse():void
         {
             this.text = null;
+            this._isPost = false;
+            this._params = null;
             super.unuse();
         }
 

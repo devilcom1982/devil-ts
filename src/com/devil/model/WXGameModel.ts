@@ -11,9 +11,19 @@ namespace devil
      */
     export class WXGameModel
     {
-        // public nickName:string = "devil";
         public userInfo:UserInfo;
         public gameName:string = "game";
+
+        /**
+         * 后台总开关
+         */
+        public masterCtrl:boolean = false;
+        public gameCtrl:any;
+
+        public code:string;
+        public openID:string;
+        
+        public list:any[];
         public get leftReceiveCount():number
         {
             let result:number = (this._receiveFreeCount - this._hasReceiveFreeCount);
@@ -22,8 +32,18 @@ namespace devil
 
         public constructor()
         {
+            this.list = [];
             this._receiveFreeCount = 0;
             this._hasReceiveFreeCount = 0;
+        }
+
+        /**
+         * 获取游戏开关
+         * @param key 
+         */
+        public getGameCtrl(key:string):boolean
+        {
+            return this.gameCtrl ? this.gameCtrl[key] == "1" : false;
         }
 
         /**
